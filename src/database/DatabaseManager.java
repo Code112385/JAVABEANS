@@ -594,6 +594,45 @@ public class DatabaseManager {
 
     }
     
+        public void retrieveAllProducts(DefaultTableModel model) {
+
+        try {
+            query = "SELECT * FROM Product";
+            stmt = conn.createStatement();
+            rs = stmt.executeQuery(query);
+
+            rsmd = rs.getMetaData();
+            colCount = rsmd.getColumnCount();
+
+            while (rs.next()) {
+                details = new Product(
+                        rs.getInt("ProductId"),
+                        rs.getString("ProductName"),
+                        rs.getDouble("Price"),
+                        rs.getInt("CategoryId"),
+                        rs.getBytes("ProductImage")
+                );
+                products.add(details);
+            }
+
+            for (Product p : products) {
+                Object[] row = new Object[colCount];
+
+                row[0] = p.getProductId();
+                row[1] = p.getProductName();
+                row[2] = p.getProductPrice();
+                row[3] = p.getProductCategory();
+                row[4] = p.getProductImage(); // optional if JTable not showing images
+                model.addRow(row);
+                System.out.println("Row displayed: " + p.getProductName());
+            }
+
+        } catch (SQLException ex) {
+            Logger.getLogger(DatabaseManager.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    
     public void retrieveUsers(DefaultTableModel model) {
         ArrayList<User> data = new ArrayList<>();
 

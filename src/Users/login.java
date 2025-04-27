@@ -159,6 +159,11 @@ public class login extends javax.swing.JFrame {
             Admin_Dashboard dashB = new Admin_Dashboard();
             dashB.setVisible(true);
             return;
+        }else{
+            JOptionPane.showMessageDialog(null, "error", "Invalid username or password",JOptionPane.ERROR_MESSAGE );
+        }
+        if(username.equals("Admin")){
+            return;
         }
 
 // First, check if account is already blocked in DB
